@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContactDataService } from '../contact-data.service';
 import { User } from '../user';
 import { LocalStorageService } from '../local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,9 @@ export class LoginComponent implements OnInit {
   userName: string;
   password: string;
 
-  constructor(private contactDataService: ContactDataService, private localStorageService: LocalStorageService) { }
+  constructor(private contactDataService: ContactDataService, 
+    private localStorageService: LocalStorageService, 
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,8 +34,8 @@ export class LoginComponent implements OnInit {
     this.contactDataService.login(user).subscribe(loginData => {
 
       if(loginData.token.authToken){
-        alert('Succes: ' + loginData.token.authToken);
         this.localStorageService.setAuthenticationToken(loginData.token.authToken);
+        this.router.navigate(['/contacts']);
       } else{
         alert('Invalid crediantial')
       }

@@ -1,5 +1,7 @@
 export class Contact{
     id: string;
-    email: string;
     name: string;
+    email: string;
+    phoneNumber: string;
+    companyName: string;
 }
