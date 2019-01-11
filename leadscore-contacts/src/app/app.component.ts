@@ -7,8 +7,7 @@ import { ContactDataService } from './contact-data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'leadscore-contacts';
-
+  
   constructor(private contactDataService: ContactDataService) {
     
   }
@@ -22,12 +21,12 @@ export class AppComponent {
     //   alert('error' + error);
     // })
 
-    this.contactDataService.login().subscribe(a => {
-      alert('log' + a);
-      console.log('log: ' + a);
-    }, error => {
-      alert('error' + error);
-    })
+    // this.contactDataService.login().subscribe(a => {
+    //   alert('log' + a);
+    //   console.log('log: ' + a);
+    // }, error => {
+    //   alert('error' + error);
+    // })
    
   
   }

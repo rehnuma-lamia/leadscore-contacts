@@ -8,5 +8,6 @@ export class Constants {
   static LeadscoreAPI = class {
     public static readonly LOGIN_URL = Constants.BASE_URL + 'login';
     public static readonly CONTACTS_URL = Constants.BASE_URL + 'contacts';
+    public static readonly LOGOUT_URL = Constants.BASE_URL + 'logout';
   };
 }

@@ -1,3 +1,5 @@
-<p>
-  login works!
-</p>
+  User name:<br>
+  <input [(ngModel)]="userName" type="text" placeholder="User name"><br>
+  User password:<br>
+  <input [(ngModel)]="password" type="password" placeholder="Password">
+  <input type="submit" value="Login" (click)="loginButtonClicked()">

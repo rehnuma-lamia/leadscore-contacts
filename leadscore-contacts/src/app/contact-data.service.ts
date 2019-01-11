@@ -2,31 +2,45 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders}    from '@angular/common/http';
 import { Constants } from './constants';
 import { Observable } from 'rxjs';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  login(): Observable<any>{
+  login(user: User): Observable<any>{
     var httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' })
+      headers: new HttpHeaders({'Content-type': 'application/json'})
     };
 
     var body = {
-      'username': 'abcd2@gmail.com',
-      'password': 'QWEasd123@'
+      'username': user.userName,
+      'password': user.password
     }
 
-    return this.http.post(Constants.LeadscoreAPI.LOGIN_URL, body, httpOptions);
+    return this.httpClient.post(Constants.LeadscoreAPI.LOGIN_URL, body, httpOptions);
   }
   
-  getContacts(): Observable<any>{
+  getContacts(authenticationToken: string): Observable<any>{
    var httpOptions = {
-     headers: new HttpHeaders({'authToken': 'session_2e5bbb38-db8e-4e59-bf77-defb96f34da1'})
+     headers: new HttpHeaders({'authToken': authenticationToken})
    }  
-   return this.http.get(Constants.LeadscoreAPI.CONTACTS_URL);
+
+   return this.httpClient.get(Constants.LeadscoreAPI.CONTACTS_URL, httpOptions);
+  }
+
+  logout(authenticationToken: string): Observable<any>{
+    var httpOptions = {
+      headers: new HttpHeaders({'Content-type': 'application/json'})
+    }; 
+
+    var body ={
+      'authToken': authenticationToken
+    }
+
+    return this.httpClient.post(Constants.LeadscoreAPI.LOGOUT_URL, body, httpOptions);
   }
 }
