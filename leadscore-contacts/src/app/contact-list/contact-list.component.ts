@@ -52,8 +52,9 @@ export class ContactListComponent implements OnInit {
             this.isError = true;
             this.alertText = "Problem in fetching data, please retry";
         })
+      } else {
+        this.router.navigate(['/login']);
       }
-
     })
   }
 
