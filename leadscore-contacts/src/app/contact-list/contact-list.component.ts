@@ -3,6 +3,7 @@ import { LocalStorageService } from '../local-storage.service';
 import { Router } from '@angular/router';
 import { ContactDataService } from '../contact-data.service';
 import { Contact } from '../contact';
+import { PagingService } from '../paging.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,11 +12,17 @@ import { Contact } from '../contact';
 })
 export class ContactListComponent implements OnInit {
 
+  allContacts: Contact[] = [];
+  pageContacts: any[] = [];
   contacts: Contact[] = [];
+
+  isError: boolean = false;
+  alertText: string = '';
 
   constructor(private contactDataService: ContactDataService,
     private localStorageService: LocalStorageService,
-    private router: Router) { }
+    private router: Router,
+    private pagingService: PagingService) { }
 
   ngOnInit() {
     this.getContacts();
@@ -34,8 +41,16 @@ export class ContactListComponent implements OnInit {
               phoneNumber: con.phoneNumbers != null && con.phoneNumbers[0].number != undefined ? con.phoneNumbers[0].number : '',
               companyName: con.companyName
             }
-            this.contacts.push(contact);
+            this.allContacts.push(contact);
           }
+
+          if (this.allContacts.length > 0) {
+            this.pageContacts = this.pagingService.getPageContacts(this.allContacts);
+            this.contacts = this.pageContacts[0];
+          }
+        },error=>{
+            this.isError = true;
+            this.alertText = "Problem in fetching data, please retry";
         })
       }
 
@@ -47,15 +62,22 @@ export class ContactListComponent implements OnInit {
   }
 
   logout() {
-    this.localStorageService.getAuthenticationToken().subscribe(authToken=>{
-      if(authToken){
-        this.contactDataService.logout(authToken).subscribe(logoutResult=>{
+    this.localStorageService.getAuthenticationToken().subscribe(authToken => {
+      if (authToken) {
+        this.contactDataService.logout(authToken).subscribe(logoutResult => {
           this.localStorageService.clearAuthenticationToken();
           this.router.navigate(['/login']);
         })
       }
+    },error => {
+        this.isError = true;
+        this.alertText = 'Logout is unsuccessful, please retry';
     })
   }
 
-
+  getOtherContacts(page: number){
+    if(this.pageContacts.length>0){
+      this.contacts = this.pageContacts[page];
+    }
+  }
 }

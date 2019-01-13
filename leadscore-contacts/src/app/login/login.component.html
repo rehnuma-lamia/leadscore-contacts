@@ -1,5 +1,27 @@
-  User name:<br>
-  <input [(ngModel)]="userName" type="text" placeholder="User name"><br>
-  User password:<br>
-  <input [(ngModel)]="password" type="password" placeholder="Password">
-  <button type="button" (click)="loginButtonClicked()">Login</button>
+<div class="container">
+  <div class="row margin-top-6">
+    <div class="col-4 offset-4">
+      <h2 class="text-center">LeadscoreContacts</h2>
+      <div class="card padding-2">
+        <div class="margin-top-1">
+          <label>Email address</label>
+          <input [(ngModel)]="userName" type="email" class="form-control" placeholder="Enter email">
+        </div>
+        <div class="margin-top-1">
+          <label>Password</label>
+          <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-outline-success btn-block margin-top-1" (click)="loginButtonClicked()">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isError" class="row margin-top-1">
+    <div class="col-4 offset-4">
+      <div class="alert alert-danger" role="alert">
+        {{alertText}}
+      </div>
+    </div>
+  </div>
+
+</div>

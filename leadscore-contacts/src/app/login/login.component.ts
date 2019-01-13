@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   userName: string;
   password: string;
+  isError: boolean = false;
+  alertText: string = '';
 
   constructor(private contactDataService: ContactDataService, 
     private localStorageService: LocalStorageService, 
@@ -32,14 +34,13 @@ export class LoginComponent implements OnInit {
     }
 
     this.contactDataService.login(user).subscribe(loginData => {
-
       if(loginData.token.authToken){
         this.localStorageService.setAuthenticationToken(loginData.token.authToken);
         this.router.navigate(['/contacts']);
-      } else{
-        alert('Invalid crediantial')
-      }
-      
+      } 
+    }, error => {
+        this.isError= true;
+        this.alertText = 'Please check the user credentails';
     })
   }
 

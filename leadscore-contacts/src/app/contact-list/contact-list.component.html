@@ -1,11 +1,58 @@
-<h1>Contacts</h1>
-<div *ngFor="let contact of contacts">
-  <div>
-    <h4>{{contact.name}}</h4>
-    <p>{{contact.email}}</p>
-    <p>{{contact.phoneNumber}}</p>
-    <p>{{contact.companyName}}</p>
-  </div>
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand h1">Contacts</span>
+  <ul class="navbar-nav">
+    <li>
+      <button class="btn-danger" type="button" (click)='logoutButtonClicked()'>Logout</button>
+    </li>
+  </ul>
+</nav>
 
+<div class="row">
+  <div class="col">
+    <small>Name</small>
+  </div>
+  <div class="col">
+    <small>Email</small>
+  </div>
+  <div class="col">
+    <small>Company name</small>
+  </div>
+  <div class="col">
+    <small>Phone number</small>
+  </div>
 </div>
-<button type="button" (click)='logoutButtonClicked()'>Logout</button>
+
+<div class="list-group" *ngFor="let contact of contacts">
+  <div class="list-group-item list-group-item-secondary">
+    <div class="row">
+      <div class="col">
+        <h4>{{contact.name}}</h4>
+      </div>
+      <div class="col">
+        <p>{{contact.email}}</p>
+      </div>
+      <div class="col">
+        <p>{{contact.companyName}}</p>
+      </div>
+      <div class="col">
+        <small>{{contact.phoneNumber}}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row margin-top-1">
+  <div class="col-4 offset-4">
+    <div *ngFor="let page of pageContacts; index as i" class="btn-group">
+      <button class="btn btn-info margin-left-1" (click)="getOtherContacts(i)">{{i + 1}}</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isError" class="row margin-top-1">
+    <div class="col-4 offset-4">
+      <div class="alert alert-danger" role="alert">
+        {{alertText}}
+      </div>
+    </div>
+  </div>

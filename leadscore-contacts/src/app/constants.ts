@@ -10,4 +10,6 @@ export class Constants {
     public static readonly CONTACTS_URL = Constants.BASE_URL + 'contacts';
     public static readonly LOGOUT_URL = Constants.BASE_URL + 'logout';
   };
+
+  public static readonly NUMBER_OF_ITEM_PER_PAGE = 2;
 }
